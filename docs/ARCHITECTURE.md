@@ -35,10 +35,37 @@ The central orchestrator and primary entry point of the ecosystem.
     *   **(Optional) Framework-Specific Tools:** Tools for interacting directly with specific frameworks (e.g., `CreateOpenAIAgentTool`, `EvolveOpenAIAgentTool`).
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  layout: elk
+  look: handDrawn
+  theme: dark
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Toggle theme value to `base` to activate the initilization below for the customized theme version.
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'graph': { 'htmlLabels': false, 'curve': 'linear' },
+    'fontFamily': 'Monospace',
+    'themeVariables': {
+      'primaryColor': '#BEF',
+      'primaryTextColor': '#000',
+      'primaryBorderColor': '#7c2',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#EE2',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 graph TD
-    UserGoal["High-Level Goal / Task"] --> SA["SystemAgent (ReActAgent)"]
+    UserGoal["High-Level Goal / Task"] --> SA["SystemAgent<br/>(ReActAgent)"]
 
-    subgraph System Agent Internal Orchestration
+    subgraph System_Agent_Internal_Orchestration["System Agent Internal Orchestration"]
         direction LR
         SA --> |Uses| SLT["SmartLibrary Tools"]
         SA --> |Uses| SBT["AgentBus Tools"]
@@ -55,8 +82,8 @@ graph TD
         SA --> |Executes Steps| FST
     end
 
-     subgraph "External Interaction (Optional/Internal)"
-         SA --> |Requests via Bus| ArchZ["ArchitectZero (Optional Design)"]
+     subgraph External_Interaction["External Interaction<br/>(Optional/Internal)"]
+         SA --> |Requests via Bus| ArchZ["ArchitectZero<br/>(Optional Design)"]
          SB --> ArchZ
          ArchZ --> SB
          SB --> SA
@@ -64,7 +91,8 @@ graph TD
 
     SA --> FinalResult["Final Task Result"]
 
-    style SA fill:#ccf,stroke:#333,stroke-width:2px
+    style SA fill:#ccf3,stroke:#333,stroke-width:2px
+
 ```
 
 ### 2.2. ArchitectZero Agent
