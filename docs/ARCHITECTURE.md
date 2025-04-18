@@ -460,12 +460,15 @@ sequenceDiagram
     autonumber
 
     actor Caller as User / Agent
-    participant SysA as SystemAgent
-    participant InternalTools as SysA Internal Tools<br/>(All)
-    participant AgentBus as Smart Agent Bus
-    participant ArchZ as ArchitectZero<br/>(Via Bus)
-    participant Library as Smart Library
-    participant TargetComp as Target Component<br/>(Via Bus)
+
+    box rgb(202, 12, 22, 0.3) The System
+        participant SysA as SystemAgent
+        participant InternalTools as SysA Internal Tools<br/>(All)
+        participant AgentBus as Smart Agent Bus
+        participant ArchZ as ArchitectZero<br/>(Via Bus)
+        participant Library as Smart Library
+        participant TargetComp as Target Component<br/>(Via Bus)
+    end
 
     Caller->>SysA: Run(High-Level Goal, Input Data)
 
@@ -478,32 +481,38 @@ sequenceDiagram
     InternalTools-->>SysA: Analysis Result
 
     alt Task is Complex or Needs Design
-        SysA->>SysA: Decide Design/Workflow Needed
-        SysA->>InternalTools: Use RequestAgentTool<br/>(Request Design from ArchZ)
-        InternalTools->>AgentBus: request_capability('solution_design', ...)
-        AgentBus->>ArchZ: Route Request
-        ArchZ->>ArchZ: Generate Design
-        ArchZ->>AgentBus: Return Design JSON
-        AgentBus->>InternalTools: Design Result
-        InternalTools-->>SysA: Solution Design Received
+        rect rgb(200, 15, 255, 0.5)
+            SysA->>SysA: Decide Design/Workflow Needed
+            SysA->>InternalTools: Use RequestAgentTool<br/>(Request Design from ArchZ)
+            InternalTools->>AgentBus: request_capability('solution_design', ...)
+            AgentBus->>ArchZ: Route Request
+            ArchZ->>ArchZ: Generate Design
+            ArchZ->>AgentBus: Return Design JSON
+            AgentBus->>InternalTools: Design Result
+            InternalTools-->>SysA: Solution Design Received
 
-        SysA->>SysA: Use GenerateWorkflowTool<br/>(Internal)
-        SysA->>SysA: Use ProcessWorkflowTool<br/>(Internal)
-        SysA->>SysA: Obtain Execution Plan<br/>(List of Steps)
+            SysA->>SysA: Use GenerateWorkflowTool<br/>(Internal)
+            SysA->>SysA: Use ProcessWorkflowTool<br/>(Internal)
+            SysA->>SysA: Obtain Execution Plan<br/>(List of Steps)
+        end
     else Task is Simple / Direct Execution
-        SysA->>SysA: Create Simple Plan<br/>(e.g., one EXECUTE step)
+        rect rgb(200, 15, 255, 0.3)
+            SysA->>SysA: Create Simple Plan<br/>(e.g., one EXECUTE step)
+        end
     end
 
-    loop For Each Step in Plan
-        SysA->>SysA: Analyze Step<br/>(e.g., type=CREATE, name=CompX)
-        SysA->>InternalTools: Use Appropriate Tool<br/>(CreateTool, RequestTool, etc.)
-        InternalTools-->>Library: (Create/Evolve Record)
-        InternalTools-->>AgentBus: (Execute Capability on TargetComp)
-        AgentBus-->>TargetComp: Route Request
-        TargetComp-->>AgentBus: Result
-        AgentBus-->>InternalTools: Result
-        InternalTools-->>SysA: Step Result
-        SysA->>SysA: Update Context/Variables
+    rect rgb(20, 15, 255, 0.5)
+        loop For Each Step in Plan
+            SysA->>SysA: Analyze Step<br/>(e.g., type=CREATE, name=CompX)
+            SysA->>InternalTools: Use Appropriate Tool<br/>(CreateTool, RequestTool, etc.)
+            InternalTools-->>Library: (Create/Evolve Record)
+            InternalTools-->>AgentBus: (Execute Capability on TargetComp)
+            AgentBus-->>TargetComp: Route Request
+            TargetComp-->>AgentBus: Result
+            AgentBus-->>InternalTools: Result
+            InternalTools-->>SysA: Step Result
+            SysA->>SysA: Update Context/Variables
+        end
     end
 
     SysA->>Caller: Return Final Workflow/Task Result
