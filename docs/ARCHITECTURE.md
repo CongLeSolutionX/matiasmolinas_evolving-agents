@@ -119,6 +119,33 @@ The persistent storage and discovery mechanism for all reusable components.
 *   **Indexing Pipeline:** Includes a step to generate `T_raz` using an LLM (`generate_applicability_text` in `LLMService`) and compute/store both `E_orig` and `E_raz` (`_sync_vector_db`).
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  layout: elk
+  look: handDrawn
+  theme: dark
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Toggle theme value to `base` to activate the initilization below for the customized theme version.
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'graph': { 'htmlLabels': false, 'curve': 'linear' },
+    'fontFamily': 'Monospace',
+    'themeVariables': {
+      'primaryColor': '#BEF',
+      'primaryTextColor': '#000',
+      'primaryBorderColor': '#7c2',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#EE2',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 graph TD
     SLI["SmartLibrary Interface"] -->|Manages| Records["Component Records (JSON)\n(T_orig, T_raz)"]
     SLI -->|Uses| VDB["Vector Database (ChromaDB)"]:::infra
@@ -135,7 +162,7 @@ graph TD
     LLMEmb -- Generates --> DualEmbeddings
     LLMReason -- Generates --> Records[T_raz]
 
-    classDef infra fill:#eee,stroke:#666,stroke-width:1px,color:#333;
+    classDef infra fill:#ee2,stroke:#666,stroke-width:1px,color:#333;
 ```
 
 ### 2.4. Smart Agent Bus (Service Bus)
@@ -153,6 +180,33 @@ Manages inter-agent communication and capability discovery/execution. Implements
 *   **Interface:** `register_agent`, `discover_agents`, `request_capability`, `get_agent_status`, `health_check`.
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  layout: elk
+  look: handDrawn
+  theme: dark
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Toggle theme value to `base` to activate the initilization below for the customized theme version.
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'graph': { 'htmlLabels': false, 'curve': 'linear' },
+    'fontFamily': 'Monospace',
+    'themeVariables': {
+      'primaryColor': '#BEF',
+      'primaryTextColor': '#000',
+      'primaryBorderColor': '#7c2',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#EE2',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 graph TD
     SABI["AgentBus Interface"] -->|Manages| Reg["Agent Registry (JSON/DB)"]
     SABI -->|Uses| CapDB["Capability Index (ChromaDB)"]
@@ -188,6 +242,33 @@ Abstract interaction with different underlying agent frameworks.
 *   **`AgentFactory`:** Used internally (e.g., by `CreateComponentTool` or the `SystemAgent`) via the `ProviderRegistry` to find the correct provider for a given framework and delegate agent creation/execution to that provider. Allows the rest of the system to work with agents generically.
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  layout: elk
+  look: handDrawn
+  theme: dark
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Toggle theme value to `base` to activate the initilization below for the customized theme version.
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'graph': { 'htmlLabels': false, 'curve': 'linear' },
+    'fontFamily': 'Monospace',
+    'themeVariables': {
+      'primaryColor': '#BEF',
+      'primaryTextColor': '#000',
+      'primaryBorderColor': '#7c2',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#EE2',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 graph TD
     AF["Agent Factory"] -->|Used by SystemAgent/Tools| PR["Provider Registry"]
     PR -->|Contains| BP["BeeAI Provider"]
@@ -197,8 +278,8 @@ graph TD
     AF -->|Delegates Create/Execute| BP
     AF -->|Delegates Create/Execute| OP
 
-    style BP fill:#f9d,stroke:#333,stroke-width:2px
-    style OP fill:#ccf,stroke:#333,stroke-width:2px
+    style BP fill:#f9d3,stroke:#333,stroke-width:2px
+    style OP fill:#ccf3,stroke:#333,stroke-width:2px
 ```
 
 ### 2.7. Dependency Container
@@ -233,17 +314,41 @@ Bridge different interfaces or formats.
 Agents interact based on *what* needs to be done (capability), not *who* does it, primarily using the Data Bus (`request_capability`).
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  theme: base
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'sequenceDiagram': { 'htmlLabels': false},
+    'fontFamily': 'verdana',
+    'themeVariables': {
+      'primaryColor': '#B28',
+      'primaryTextColor': '#F8B229',
+      'primaryBorderColor': '#7C33',
+      'secondaryColor': '#0615'
+    }
+  }
+}%%
 sequenceDiagram
-    participant AA as Agent A (Requester)
+    autonumber
+
+    participant AA as Agent A<br/>(Requester)
     participant SB as Smart Agent Bus
-    participant CR as Capability Registry (in Bus)
-    participant AB as Agent B (Provider, Not selected)
-    participant AC as Agent C (Provider, Selected)
+    participant CR as Capability Registry<br/>(in Bus)
+    participant AB as Agent B<br/>(Provider, Not selected)
+    participant AC as Agent C<br/>(Provider, Selected)
 
     AA->>SB: request_capability("Analyze Sentiment", data)
-    SB->>CR: Find Providers for "Analyze Sentiment" (Semantic Search)
-    CR->>SB: Return [Agent C (0.9), Agent B (0.7)]
-    SB->>AC: Route Request(data) [Selects best healthy provider]
+    SB->>CR: Find Providers for "Analyze Sentiment" <br/>(Semantic Search)
+    CR->>SB: Return <br/>[Agent C (0.9), Agent B (0.7)]
+    SB->>AC: Route Request(data) <br/>[Selects best healthy provider]
     AC->>AC: Process Request
     AC->>SB: Return Result(sentiment_score)
     SB->>AA: Return Result(sentiment_score)
@@ -261,29 +366,54 @@ When an agent (e.g., `SystemAgent`) needs context for a specific task, it levera
 6.  **Context Provision:** The agent receives the highly relevant `T_orig` chunks tailored to its specific task.
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  theme: base
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'sequenceDiagram': { 'htmlLabels': false},
+    'fontFamily': 'verdana',
+    'themeVariables': {
+      'primaryColor': '#B28',
+      'primaryTextColor': '#F8B229',
+      'primaryBorderColor': '#7C33',
+      'secondaryColor': '#0615'
+    }
+  }
+}%%
 sequenceDiagram
-    participant Agent as Requesting Agent (e.g., SystemAgent)
+    autonumber
+
+    participant Agent as Requesting Agent<br/>(e.g., SystemAgent)
     participant SL as Smart Library
-    participant VDB as Vector DB (Dual Embeddings)
+    participant VDB as Vector DB<br/>(Dual Embeddings)
     participant LLM_Emb as Embedding Service
 
     Agent->>Agent: Formulate Query & Task Context
     Agent->>LLM_Emb: Embed Query (E_orig Model) & Task Context (E_raz Model)
-    LLM_Emb-->>Agent: Query Embeddings (E_orig, E_raz)
+    LLM_Emb-->>Agent: Query Embeddings<br/>(E_orig, E_raz)
 
     Agent->>SL: search(Query, Task Context, ...)
 
     SL->>VDB: Search E_raz Index with Task Context Embedding
-    VDB-->>SL: Top-K Candidate Chunk IDs (Task Relevant)
+    VDB-->>SL: Top-K Candidate Chunk IDs<br/>(Task Relevant)
 
     SL->>VDB: Retrieve E_orig for Candidates
-    SL->>SL: Calculate Content Similarity (Query E_orig vs Candidate E_orig)
+    SL->>SL: Calculate Content Similarity<br/>(Query E_orig vs Candidate E_orig)
     SL->>SL: Combine Task Score & Content Score (Weighted) -> Final Score
     SL->>SL: Apply Usage Boost
     SL->>SL: Sort/Filter by Final Score
 
     SL->>SL: Fetch T_orig for Final Candidates
     SL-->>Agent: Return Relevant T_orig Chunks & Scores
+
 ```
 
 ### 3.3. Workflow Generation & Execution (Orchestrated by SystemAgent)
@@ -304,19 +434,43 @@ Complex tasks requiring multiple steps or new components are handled internally 
 **Key Point:** Steps 3 and 4 (Design, Generate, Process, Execute Plan) are internal mechanisms of the `SystemAgent` and are abstracted away from the external caller.
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  theme: base
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'sequenceDiagram': { 'htmlLabels': false},
+    'fontFamily': 'verdana',
+    'themeVariables': {
+      'primaryColor': '#B28',
+      'primaryTextColor': '#F8B229',
+      'primaryBorderColor': '#7C33',
+      'secondaryColor': '#0615'
+    }
+  }
+}%%
 sequenceDiagram
-    participant Caller as User / Agent
+    autonumber
+
+    actor Caller as User / Agent
     participant SysA as SystemAgent
-    participant InternalTools as SysA Internal Tools (All)
+    participant InternalTools as SysA Internal Tools<br/>(All)
     participant AgentBus as Smart Agent Bus
-    participant ArchZ as ArchitectZero (Via Bus)
+    participant ArchZ as ArchitectZero<br/>(Via Bus)
     participant Library as Smart Library
-    participant TargetComp as Target Component (Via Bus)
+    participant TargetComp as Target Component<br/>(Via Bus)
 
     Caller->>SysA: Run(High-Level Goal, Input Data)
 
-    SysA->>SysA: Analyze Goal (ReAct Loop)
-    SysA->>InternalTools: Use Search/Discover Tools (Check Library/Bus, potentially with Task Context)
+    SysA->>SysA: Analyze Goal<br/>(ReAct Loop)
+    SysA->>InternalTools: Use Search/Discover Tools<br/>(Check Library/Bus, potentially with Task Context)
     InternalTools-->>Library: Query
     InternalTools-->>AgentBus: Query
     Library-->>InternalTools: Component Info
@@ -325,7 +479,7 @@ sequenceDiagram
 
     alt Task is Complex or Needs Design
         SysA->>SysA: Decide Design/Workflow Needed
-        SysA->>InternalTools: Use RequestAgentTool (Request Design from ArchZ)
+        SysA->>InternalTools: Use RequestAgentTool<br/>(Request Design from ArchZ)
         InternalTools->>AgentBus: request_capability('solution_design', ...)
         AgentBus->>ArchZ: Route Request
         ArchZ->>ArchZ: Generate Design
@@ -333,16 +487,16 @@ sequenceDiagram
         AgentBus->>InternalTools: Design Result
         InternalTools-->>SysA: Solution Design Received
 
-        SysA->>SysA: Use GenerateWorkflowTool (Internal)
-        SysA->>SysA: Use ProcessWorkflowTool (Internal)
-        SysA->>SysA: Obtain Execution Plan (List of Steps)
+        SysA->>SysA: Use GenerateWorkflowTool<br/>(Internal)
+        SysA->>SysA: Use ProcessWorkflowTool<br/>(Internal)
+        SysA->>SysA: Obtain Execution Plan<br/>(List of Steps)
     else Task is Simple / Direct Execution
-        SysA->>SysA: Create Simple Plan (e.g., one EXECUTE step)
+        SysA->>SysA: Create Simple Plan<br/>(e.g., one EXECUTE step)
     end
 
     loop For Each Step in Plan
-        SysA->>SysA: Analyze Step (e.g., type=CREATE, name=CompX)
-        SysA->>InternalTools: Use Appropriate Tool (CreateTool, RequestTool, etc.)
+        SysA->>SysA: Analyze Step<br/>(e.g., type=CREATE, name=CompX)
+        SysA->>InternalTools: Use Appropriate Tool<br/>(CreateTool, RequestTool, etc.)
         InternalTools-->>Library: (Create/Evolve Record)
         InternalTools-->>AgentBus: (Execute Capability on TargetComp)
         AgentBus-->>TargetComp: Route Request
@@ -365,6 +519,33 @@ Components can be improved or adapted, typically orchestrated by the `SystemAgen
 4.  The tool calls `SmartLibrary.evolve_record` to create a new record (`ComponentA_v2`) linked to the parent, saving the new code and incrementing the version. This also triggers indexing of the new version, including T_raz generation and dual embedding.
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  layout: elk
+  look: handDrawn
+  theme: dark
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Toggle theme value to `base` to activate the initilization below for the customized theme version.
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'graph': { 'htmlLabels': false, 'curve': 'linear' },
+    'fontFamily': 'Monospace',
+    'themeVariables': {
+      'primaryColor': '#BEF',
+      'primaryTextColor': '#000',
+      'primaryBorderColor': '#7c2',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#EE2',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 graph TD
     Start --> Need{Need for Evolution Identified}
     Need -->|Invoke via SystemAgent| ECT["EvolveComponentTool.run(parent_id, changes, strategy)"]
