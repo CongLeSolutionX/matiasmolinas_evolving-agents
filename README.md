@@ -15,29 +15,58 @@ EAT is a Python toolkit for constructing advanced, multi-agent applications wher
 ---
 
 ```mermaid
+---
+author: "Cong Le"
+version: "1.0"
+license(s): "MIT, CC BY 4.0"
+config:
+  layout: elk
+  look: handDrawn
+  theme: base
+---
+%%%%%%%% Mermaid version v11.4.1-b.14
+%%%%%%%% Toggle theme value to `base` to activate the initilization below for the customized theme version.
+%%%%%%%% Available curve styles include the following keywords:
+%% basis, bumpX, bumpY, cardinal, catmullRom, linear, monotoneX, monotoneY, natural, step, stepAfter, stepBefore.
+%%{
+  init: {
+    'graph': { 'htmlLabels': false, 'curve': 'linear' },
+    'fontFamily': 'Monospace',
+    'themeVariables': {
+      'primaryColor': '#BEF',
+      'primaryTextColor': '#000',
+      'primaryBorderColor': '#7c2',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#EE2',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
 graph TD
-    User["User / External System"] -- High-Level Goal --> SA[("SystemAgent\n(Central Orchestrator)")];;;agent
+    User["User / External System"] -- High-Level Goal --> SA[("SystemAgent<br/>(Central Orchestrator)")]:::agent
 
-    subgraph "Core Infrastructure & Services"
+    subgraph Core_Infrastructure_and_Services["Core Infrastructure & Services"]
+    style Core_Infrastructure_and_Services fill:#22d
         direction LR
-        SL["Smart Library\n(Component Storage, Search, Versioning)"];;;service
-        SB["Smart Agent Bus\n(Discovery, Routing, Communication - System/Data Bus)"];;;service
-        LLMS["LLM Service\n(Reasoning, Embeddings, Generation)"];;;service
-        FW["Firmware\n(Governance Rules)"];;;service
-        Providers["Providers\n(Agent/Tool Factories - BeeAI, OpenAI, etc)"];;;infra
-        VDB[("Vector DB\n(Semantic Search - ChromaDB)")]:::infra
-        SCtx[("SmartContext\n(Task-Specific Context)")]:::service
+        SL["Smart Library<br/>(Component Storage, Search, Versioning)"]:::service
+        SB["Smart Agent Bus<br/>(Discovery, Routing, Communication - System/Data Bus)"]:::service
+        LLMS["LLM Service<br/>(Reasoning, Embeddings, Generation)"]:::service
+        FW["Firmware<br/>(Governance Rules)"]:::service
+        Providers["Providers<br/>(Agent/Tool Factories - BeeAI, OpenAI, etc)"]:::infra
+        VDB[("Vector DB<br/>(Semantic Search - ChromaDB)")]:::infra
+        SCtx[("SmartContext<br/>(Task-Specific Context)")]:::service
     end
 
-    subgraph "Key Agents & Factories"
+    subgraph Key_Agents_and_Factories["Key Agents & Factories"]
+    style Key_Agents_and_Factories fill:#aa22
         direction LR
-         AgentF["Agent Factory"];;;infra
-         ToolF["Tool Factory"];;;infra
-         ArchZ["ArchitectZero\n(Optional: Solution Design)"];;;agent
+         AgentF["Agent Factory"]:::infra
+         ToolF["Tool Factory"]:::infra
+         ArchZ["ArchitectZero<br/>(Optional: Solution Design)"]:::agent
     end
 
     %% Main Control Flow & Dependencies
-    SA -- Uses --> Tools["SystemAgent Tools\n(Search, Create, Evolve, Request, Workflow...)"];;;tool
+    SA -- Uses --> Tools["SystemAgent Tools<br/>(Search, Create, Evolve, Request, Workflow...)"]:::tool
     SA -- Uses --> LLMS
     SA -- Utilizes --> SCtx
     SA -- Relies on --> AgentF
@@ -65,27 +94,28 @@ graph TD
     SCtx -- Relies on --> LLMS
 
     %% Bus Interaction with Ecosystem
-    SB -- Routes Request (Data Bus) --> Ecosystem["Managed Agents / Tools\n(Ecosystem Components)"]
-    SB -- Manages Registration/Discovery (System Bus) --> Ecosystem
+    SB -- "Routes Request<br/>(Data Bus)" --> Ecosystem["Managed Agents / Tools<br/>(Ecosystem Components)"]
+    SB -- "Manages Registration/Discovery<br/>(System Bus)" --> Ecosystem
 
     %% Agent/Tool Creation/Management
-    AgentF -- Creates/Manages --> Ecosystem
-    ToolF -- Creates/Manages --> Ecosystem
+    AgentF -- "Creates/Manages" --> Ecosystem
+    ToolF -- "Creates/Manages" --> Ecosystem
 
     %% Optional Design Interaction (Often Internal to SystemAgent)
-    SA -.->|Optional: Requests Design via Bus| ArchZ
+    SA -.->|"Optional: Requests Design via Bus"| ArchZ
 
     %% Final Result Flow
     SA -- Final Result --> User
 
     %% Define styles for clarity
-    classDef agent fill:#9cf,stroke:#333,stroke-width:2px;
-    classDef service fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef tool fill:#ccf,stroke:#333,stroke-width:2px;
-    classDef infra fill:#eee,stroke:#666,stroke-width:1px,color:#333;
+    classDef agent fill:#9cf3,stroke:#333,stroke-width:2px
+    classDef service fill:#f9f3,stroke:#333,stroke-width:2px
+    classDef tool fill:#cc3,stroke:#333,stroke-width:2px
+    classDef infra fill:#eee,stroke:#666,stroke-width:1px,color:#333
 
     %% Highlight SystemAgent
-    style SA fill:#69c,stroke:#000,stroke-width:3px,color:#fff;
+    style SA fill:#69c,stroke:#000,stroke-width:3px
+
 ```
 *Diagram Key: `agent` = Core EAT Agent, `service` = Core EAT Service, `tool` = SystemAgent's Internal Tools, `infra` = Supporting Infrastructure.*
 
