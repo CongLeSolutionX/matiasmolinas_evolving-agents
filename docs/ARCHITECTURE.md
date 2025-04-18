@@ -339,11 +339,13 @@ config:
 sequenceDiagram
     autonumber
 
-    participant AA as Agent A<br/>(Requester)
-    participant SB as Smart Agent Bus
-    participant CR as Capability Registry<br/>(in Bus)
-    participant AB as Agent B<br/>(Provider, Not selected)
-    participant AC as Agent C<br/>(Provider, Selected)
+    box rgb(202, 12, 22, 0.3) The System
+        participant AA as Agent A<br/>(Requester)
+        participant SB as Smart Agent Bus
+        participant CR as Capability Registry<br/>(in Bus)
+        participant AB as Agent B<br/>(Provider, Not selected)
+        participant AC as Agent C<br/>(Provider, Selected)
+    end
 
     AA->>SB: request_capability("Analyze Sentiment", data)
     SB->>CR: Find Providers for "Analyze Sentiment" <br/>(Semantic Search)
@@ -391,10 +393,12 @@ config:
 sequenceDiagram
     autonumber
 
-    participant Agent as Requesting Agent<br/>(e.g., SystemAgent)
-    participant SL as Smart Library
-    participant VDB as Vector DB<br/>(Dual Embeddings)
-    participant LLM_Emb as Embedding Service
+    box rgb(202, 12, 22, 0.3) The System
+        participant Agent as Requesting Agent<br/>(e.g., SystemAgent)
+        participant SL as Smart Library
+        participant VDB as Vector DB<br/>(Dual Embeddings)
+        participant LLM_Emb as Embedding Service
+    end
 
     Agent->>Agent: Formulate Query & Task Context
     Agent->>LLM_Emb: Embed Query (E_orig Model) & Task Context (E_raz Model)
